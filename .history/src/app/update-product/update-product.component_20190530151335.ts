@@ -2,8 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { ActivatedRoute, Router } from "@angular/router";
 import "rxjs/add/operator/toPromise";
-import { IndexDBOperationService } from "../service/idbdb-operation.service";
-import { ProductModel } from "../model/ProductModel";
 
 @Component({
   selector: "app-update-product",
@@ -16,29 +14,22 @@ export class UpdateProductComponent implements OnInit {
   products;
   productObj: object = {};
   exist: boolean = false;
-  currentProduct: ProductModel;
 
   private headers = new HttpHeaders({ "Content-Type": "application/json" });
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private idbService: IndexDBOperationService
-  ) { }
+    private http: HttpClient
+  ) {}
 
   updateProduct(product) {
+    debugger;
     this.productObj = {
       name: product.name,
       color: product.color
     };
-    const url = `${"http://localhost:5555/products"}/${this.id}`;
-    this.currentProduct = new ProductModel();
-    this.currentProduct.id = this.id;
-    this.currentProduct.name = product.name;
-    this.currentProduct.color = product.color;
-
-    this.idbService.addProductinIDB(this.currentProduct);
-
+    const url = `http://arihantvashisht.nagarro.local:9080/ProductStoreApp-war/ProductStoreController/Productstore/product/31`;
+    console.log(url);
     this.http
       .put(url, JSON.stringify(this.productObj), {
         headers: this.headers
@@ -47,9 +38,6 @@ export class UpdateProductComponent implements OnInit {
       .then(() => {
         console.log(this.router.url);
         this.router.navigate(["/"]);
-      }).catch((err: Error) => {
-        // simple logging, but you can do a lot more, see below
-        console.error("----An error occurred while updating:");
       });
   }
 

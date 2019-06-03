@@ -26,7 +26,10 @@ export class HomeComponent implements OnInit {
       .subscribe((res: Response) => {
         this.indexDBOps.clearIndexedDb();
         this.indexDBOps.loadProductsinIDB(res);
-      });
+      },
+        error => {
+          console.log('Error while getting data');
+        });
   };
 
   updateUI() {

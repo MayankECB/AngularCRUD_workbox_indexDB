@@ -40,14 +40,10 @@ export class ProductsComponent implements OnInit {
       .post("http://localhost:5555/products/", this.productObj)
       .subscribe((res: Response) => {
         this.router.navigate(["/"]);
-      });
-    // .catch((err: HttpErrorResponse) => {
-    //   // simple logging, but you can do a lot more, see below
-    //   console.error(
-    //     "----An error occurred while adding new product :",
-    //     err.error
-    //   );
-    // })
+      },
+        error => {
+          console.log('Error while adding data');
+        });
   };
 
   ngOnInit() { }
